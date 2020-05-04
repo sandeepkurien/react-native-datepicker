@@ -14,7 +14,7 @@ import {
     Keyboard
 } from 'react-native';
 import Style from './style';
-import Moment from 'moment';
+import Moment from 'moment-timezone';
 
 const FORMATS = {
     'date': 'YYYY-MM-DD',
@@ -27,7 +27,6 @@ const SUPPORTED_ORIENTATIONS = ['portrait', 'portrait-upside-down', 'landscape',
 class DatePicker extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             date: this.getDate(),
             modalVisible: false,
@@ -200,7 +199,8 @@ class DatePicker extends Component {
     onDatePicked({ action, year, month, day }) {
         if (action !== DatePickerAndroid.dismissedAction) {
             this.setState({
-                date: new Date(year, month, day)
+                //date: new Date(year, month, day)
+                date: Moment().set({'year': year, 'month': month, 'date': day}).toDate()
             });
             this.datePicked();
         } else {
